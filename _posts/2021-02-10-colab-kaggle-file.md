@@ -1,6 +1,9 @@
 ---
 layout: post
 title: colab(google drive)-kaggle-file-management
+categories: [colab, kaggle]
+tags: [file, management]
+published: true	
 ---
 
 Google Colaboratory에 Kaggle의 파일을 업로드 시키는 방법
