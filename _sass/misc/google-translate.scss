@@ -46,12 +46,12 @@ div#google_translate_element {
   display: none;
 
   div.goog-te-gadget {
-    display: inline;
+    display: none;
     font-size: 0;
   }
 
   div[id=':0.targetLanguage'] {
-    display: inline;
+    display: none;
   }
 
   div.goog-te-gadget-simple {
