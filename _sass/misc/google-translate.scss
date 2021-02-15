@@ -1,4 +1,5 @@
 /* OVERRIDE GOOGLE TRANSLATE WIDGET CSS BEGIN */
+/* line 46   display: inline;  ->   display: none;*/
 
 %goog-te-menu {
   a.goog-te-menu-value {
@@ -42,7 +43,7 @@
 }
 
 div#google_translate_element {
-  display: inline;
+  display: none;
 
   div.goog-te-gadget {
     display: inline;
