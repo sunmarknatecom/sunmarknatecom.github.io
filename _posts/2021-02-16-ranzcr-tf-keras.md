@@ -1,3 +1,8 @@
+---
+layout: post
+title: ranzcr-tf-keras
+---
+
 ```python
 !pip list
 ```
