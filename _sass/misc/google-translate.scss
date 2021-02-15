@@ -1,5 +1,4 @@
 /* OVERRIDE GOOGLE TRANSLATE WIDGET CSS BEGIN */
-/* line 46   display: inline;  ->   display: none;*/
 
 %goog-te-menu {
   a.goog-te-menu-value {
@@ -43,15 +42,15 @@
 }
 
 div#google_translate_element {
-  display: none;
+  display: inline;
 
   div.goog-te-gadget {
-    display: none;
+    display: inline;
     font-size: 0;
   }
 
   div[id=':0.targetLanguage'] {
-    display: none;
+    display: inline;
   }
 
   div.goog-te-gadget-simple {
@@ -194,4 +193,3 @@ body {
     font-family: FontAwesome;
   }
 }
-
