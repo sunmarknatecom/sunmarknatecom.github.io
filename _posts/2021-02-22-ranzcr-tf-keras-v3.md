@@ -975,7 +975,7 @@ plt.show()
 ```
 
 
-![png](output_9_0.png)
+![png](/2021-02-22/output_9_0.png)
 
 
 
