@@ -1,6 +1,8 @@
 ---
 layout: post
 title: math equation in html
+use_math: true
+comments: true
 ---
 
 <script type="text/x-mathjax-config">
