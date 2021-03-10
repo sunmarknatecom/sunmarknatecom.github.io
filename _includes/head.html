@@ -14,4 +14,8 @@
   {%- include extensions/google-analytics.html -%}
   {%- endif -%}
   {%- include extensions/code-highlight.html -%}
+
+{% if page.use_math %}
+  {% include mathjax_support.html %}
+{% endif %}
 </head>
