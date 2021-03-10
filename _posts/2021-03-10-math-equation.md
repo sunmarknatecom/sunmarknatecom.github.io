@@ -28,3 +28,5 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 <script type="text/javascript" async
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+???
+Why? not viewed..??
