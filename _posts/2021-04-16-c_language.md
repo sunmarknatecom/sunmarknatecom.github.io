@@ -1,7 +1,8 @@
 ---
 layout: post
 title: C++ language 01
-comments: true
+categories: [C++]
+tags: [C++]
 ---
 
 C언어 예약어
