@@ -1,3 +1,10 @@
+---
+layout: post
+title: C언어 메모리
+categories: [C]
+tags: [C]
+---
+
 메모리 확보 관련 함수
 
 1. calloc
