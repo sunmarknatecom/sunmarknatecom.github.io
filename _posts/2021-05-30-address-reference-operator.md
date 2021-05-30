@@ -7,8 +7,8 @@ tags: [C++]
 
 C++에서 포인터를 공부하면서 주소 그리고 참조 연산자를 매일 어렵다고 한다.
 
-주소 연산자(Address operator) : &
-참조 연산자(Reference operator, pointer) : *
+주소 연산자(address-of operator) : &
+참조 연산자(de-reference operator, pointer) : *
 
 <- * 참조 연산자 추가하면 변수로 감 , & 주소 연산자 추가하면 주소로 감 ->
 
