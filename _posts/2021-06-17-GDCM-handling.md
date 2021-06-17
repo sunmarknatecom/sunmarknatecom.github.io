@@ -1,3 +1,11 @@
+---
+layout: post
+title: GDCM dicom instance handling
+categories: [C++, GDCM]
+tags: [C++, GDCM]
+published: true	
+---	
+
 
 gdcm 인스턴스 핸들링 참고
 
