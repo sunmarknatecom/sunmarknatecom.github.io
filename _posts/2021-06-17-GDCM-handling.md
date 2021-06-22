@@ -11,7 +11,7 @@ gdcm 인스턴스 핸들링 참고
 
 https://stackoverflow.com/questions/30066695/gdcm-id-like-to-do-a-simple-sharpening-filter-to-the-image-but-have-no-idea-h
 
-```java
+```c++
 
 #include "gdcmPhotometricInterpretation.h"
 #include <iostream>
