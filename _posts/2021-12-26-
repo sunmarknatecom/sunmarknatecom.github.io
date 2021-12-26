@@ -1,1 +1,95 @@
-dd
+---
+layout: post
+title: kaggle_rsna
+categories: kaggle, python
+tags: python
+published: true	
+---
+
+
+```python
+from glob import glob
+import numpy as np
+import pydicom, cv2, os, sys
+from pydicom.pixel_data_handlers.util import apply_modality_lut, apply_voi_lut
+
+
+def dcm_to_img(src_img):
+    '''
+    src(1 param): dicom pixel array
+    return : float array [0-1]
+    requried package: numpy
+    '''
+    MAX_VAL = np.max(src_img)
+    MIN_VAL = np.min(src_img)
+    DIV_UP = src_img - MIN_VAL
+    DIV_DN = MAX_VAL - MIN_VAL
+    normalized_img = DIV_UP / DIV_DN
+    scaled_img = normalized_img * 255
+    ret_img = np.array(scaled_img, dtype='uint8')
+    return ret_img
+
+def gray_to_color(src_img_gray):
+    '''
+    src(1 param): 1 channel array
+    return: 3 channel array(gray color)
+    '''
+    height = np.shape(src_img_gray)[0]
+    width = np.shape(src_img_gray)[1]
+    template_arr = np.zeros((height,width,3),dtype='uint8')
+    for height_elem in range(height):
+        for width_elem in range(width):
+            for ch in range(3):
+                template_arr[height_elem][width_elem][ch] = src_img_gray[height_elem][width_elem]
+    return template_arr
+
+def adjust_HU(path='1-100.dcm',window_center = -1400, window_width = 1400):
+    '''
+    src(3 params): path is dcm file name, window_center, window_width
+    return: window adjusted pixel_array
+    '''
+    slice = pydicom.dcmread(path)
+    s = int(slice.RescaleSlope)
+    b = int(slice.RescaleIntercept)
+    image = s * slice.pixel_array + b
+    slice.WindowCenter = window_center
+    slice.WindowWidth = window_width
+    image = apply_modality_lut(image, slice)
+    image2 = apply_voi_lut(image, slice)
+    image3 = np.clip(image, window_center - (window_width/2), window_center + (window_width/2))
+    return image3
+
+def main(a=-1400,b=1400):
+    '''
+    USAGE:
+    C:>python dcm_to_jpg.py
+    a = window_center (default: -1400)
+    b = window_width (default: 1400)
+    '''
+    if not os.path.exists('./jpg/') :
+        os.mkdir('./jpg/')  
+    LIST_FILES = sorted(glob("*.dcm"))
+    for i, elem in enumerate(LIST_FILES):
+        OBJ_PIXEL = adjust_HU(path=elem, window_center=a, window_width=b)
+        OBJ_ARRAY = dcm_to_img(OBJ_PIXEL)
+        OBJ_IMG = gray_to_color(OBJ_ARRAY)
+        cv2.imwrite('./jpg/'+elem[:-3]+'jpg', OBJ_IMG)
+        progress = (" %3d" %(int(round(100*i/len(LIST_FILES))))) + "% 진행완료"
+        print(progress, end='\r')
+    print(progress)
+    
+
+if __name__=='__main__':
+    if len(sys.argv) == 1:
+        print("Lung setting jpg were created.")
+        main()
+        print(" Finished")
+    elif len(sys.argv) == 2 and sys.argv[1] == 'o':
+        print("This app works to convert dicom files to jpg files")
+        print("If you want to select the CT HU window, type the window center and width.")
+        window_center = int(input("Window center: "))
+        window_width = int(input("Window width:  "))
+        main(a=window_center,b=window_width)
+    else:
+        print("Not work.")
+```
