@@ -1,3 +1,11 @@
+---
+layout: post
+title: body_detection
+categories: tensorflow, python
+tags: python
+published: true	
+---
+
 ```python
 from PIL import Image
 import numpy as np
