@@ -1,3 +1,11 @@
+---
+layout: post
+title: code_cleaning
+categories: tensorflow, python
+tags: python
+published: true	
+---
+
 ```python
 !pip install git+https://github.com/tensorflow/examples.git
 !pip install -U tfds-nightly
