@@ -19,9 +19,14 @@ from tensorflow_examples.models.pix2pix import pix2pix
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 
+# 파일 이름 불러오기
+# TRAIN_DS : 폐 부위 윈도우 영상 (jpg, RGB, 3 채널)
+# MASK__DS : ground truth (png, 0: body 이외, 1: body, 1 채널)
 
 TRAIN_DS = sorted(glob.glob("/content/*.jpg"))
 MASK__DS = sorted(glob.glob("/content/*.png"))
+
+# numpy 배열 객체 리스트로 변환, 빈 리스트 생성 후, 추가
 
 TRAIN_DATASET = []
 MASK__DATASET = []
@@ -38,11 +43,13 @@ for fn in MASK__DS:
     arr_obj = cv2.resize(temp2_obj, dsize=(128, 128))
     MASK__DATASET.append(arr_obj)
 
+# 영상의 normalization
+
 TRAIN_TEMP = []
 for elem in TRAIN_DATASET:
     input_image = tf.cast(elem, tf.float32) / 255.0
     TRAIN_TEMP.append(input_image)
-
+# 
 MASK_TEMP = []
 for elem in MASK__DATASET:
     for i, elemi in enumerate(elem):
