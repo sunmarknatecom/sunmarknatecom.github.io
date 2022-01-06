@@ -1,3 +1,11 @@
+---
+layout: post
+title: code_cleaning
+categories: kaggle, tensorflow, python
+tags: python
+published: true	
+---
+
 ```python
 import cv2
 import numpy as np
