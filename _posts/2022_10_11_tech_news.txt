@@ -1,0 +1,38 @@
+Medical Imaging Tech News
+
+2022.10.11
+
+오늘 알려드릴 기술뉴스는 텐서플로에서 입력데이터 파이프라인을 작성하는 방법입니다.
+
+텐서플로의 자료형은 텐서가 있습니다. 이 텐서는 넘파이(NumPy)와 파이썬의 리스트와 유사한 자료형입니다.
+
+텐서는 크게 스칼라, 벡터, 행렬로 구분할 수 있습니다.
+
+* 스칼라 | 순위-0(Rank-0) | 숫자들의 나열
+* 벡터   | 순위-1(Rank-1) | 동일한 형상의 스칼라들의 나열
+* 행렬   | 순위-2(Rank-2) | 동일한 형상의 벡터들의 나열
+
+Rank-3이상은 모두 행렬이라고 말합니다.
+
+```python
+
+rank_0_tensor = tf.constant(4)
+rank_1_tensor = tf.constant([2.0, 3.0, 4.0])
+rank_2_tensor = tf.constant([[1,2],
+                             [3,4],
+                             [5,6]], dtype=tf.float16)
+
+```
+
+만일 만들어진 텐서를 넘파이행렬로 변환하고 싶을 경우에는 np.array(), tenor_array.numpy() 함수를 사용한다.
+
+```python
+
+# usage1
+np.array(rank_2_tensor)
+
+# usage2
+rank_2_tensor.numpy()
+
+```
+
