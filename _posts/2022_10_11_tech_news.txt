@@ -6,6 +6,8 @@ Medical Imaging Tech News
 
 텐서플로의 자료형은 텐서가 있습니다. 이 텐서는 넘파이(NumPy)와 파이썬의 리스트와 유사한 자료형입니다.
 
+1. 일반
+
 텐서는 크게 스칼라, 벡터, 행렬로 구분할 수 있습니다.
 
 * 스칼라 | 순위-0(Rank-0) | 숫자들의 나열
@@ -36,3 +38,58 @@ rank_2_tensor.numpy()
 
 ```
 
+2. 인덱싱
+# 넘파이의 인덱싱 기본 규칙을 따름
+
+* 인덱스는 0에서 시작
+* 음수 인덱스는 끝에서부터 거꾸로 계산
+* 콜론, :은 슬라이스, start:stop:step에 사용
+
+# 다측 인덱싱
+
+더 높은 순위의 텐서는 여러 인덱스를 전달하여 인덱싱됨
+단일 축의 경우에서와 정확히 같은 규칙이 각 축에 독립적으로 적용
+
+3. 형상조작
+기본 데이터를 복제할 필요가 없으므로 재구성이 빠르고 저렴
+
+```python
+
+tf.reshape(rank_2_tensor, [axis_0, axis_1, axis2])
+
+```
+
+reshape()의 용도는 인접한 축으 ㄹ결합 또는 분할 또는 1을 추가/제거
+만을 축교환을 할 경우에는
+tf.transpose()함수를 수행해야함
+
+4. 데이터타입 검사
+
+Tensor.dtype 속성으로 확인
+
+캐스팅 가능
+
+```python
+
+tf_f64_tensor = tf.constant([2.2, 3.3, 4.4], dtype=tf.float64)
+tf_f16_tensor = tf.cast(tf_f64_tensor, dtype=tf.float16)
+tf_u8_tensor = tf.cast(tf_f16_tensor, dtype=tf.uint8)
+
+```
+
+5. 브로드캐스팅
+
+특정 조건에서 작은 텐서가 결합된 연산을 실행할 때 더 큰 텐서에 맞게 자독으로 확장
+
+```python
+
+x = tf.constant([1, 2, 3])
+y = tf.constant(2)
+z = tf.constant([2, 2, 2])
+
+print(tf.multiply(x, 2))
+print(x * y)
+print(x * z)
+
+
+```
