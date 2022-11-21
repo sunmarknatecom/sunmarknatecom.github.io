@@ -1,0 +1,4 @@
+TCIA의 각 환자들의 torso CT데이터 여부를 확인하여, CT데이터가 없는 ?명을 제외하였다. 이들 CT데이터에서 512 X 512 pixel사이즈를 가지지 않는 ? 명을 제외하였다. Each CT volume 들의 5mm 몇 명, 4 mm 몇 명, 3 mm 몇 명이었다. 1단계 데이터 라벨링은 다리쪽 절반의 CT slice들만의 영상에서 spine과 spine이 아닌(outisde the spines) portion을 label로 하여 annotation을 하였으며, 이들 transaxial image들을 sagittal view 영상으로 재구성하여, 총 ?장의 input data로 사용하였다. 
+2단계 데이터 분석에서는 L3 level 영상을 찾기 위한 단계로, 1단계에서 추출한 spine데이터를 input 데이터로 사용하고, 
+
+ 2단계 데이터는 trunk영상과 아닌 데이터를 mask데이터로 사용하였다. 3단계 데이터는 라벨링은 body composition labeling으로 background, muscle, subcutaneous tissue, abdominal cavity 4 개의 다른 label로 annotation하였다. annotation을 위해서 3d slicer software (version 5.1) was used. Region segmentation was perfomed manually. Final dataset은 단계에서 장의 sagittal image가 이용되었으며, 
