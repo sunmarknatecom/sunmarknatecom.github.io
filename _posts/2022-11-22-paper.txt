@@ -1,4 +1,11 @@
 TCIA의 각 환자들의 torso CT데이터 여부를 확인하여, CT데이터가 없는 ?명을 제외하였다. 이들 CT데이터에서 512 X 512 pixel사이즈를 가지지 않는 ? 명을 제외하였다. Each CT volume 들의 5mm 몇 명, 4 mm 몇 명, 3 mm 몇 명이었다. 1단계 데이터 라벨링은 다리쪽 절반의 CT slice들만의 영상에서 spine과 spine이 아닌(outisde the spines) portion을 label로 하여 annotation을 하였으며, 이들 transaxial image들을 sagittal view 영상으로 재구성하여, 총 ?장의 input data로 사용하였다. 
-2단계 데이터 분석에서는 L3 level 영상을 찾기 위한 단계로, 1단계에서 추출한 spine데이터를 input 데이터로 사용하고, 
+2단계 데이터 분석에서는 L3 level 영상을 찾기 위한 단계로, 1단계에서 추출한 spine데이터를 input 데이터로 사용하고, spine의 level을 구분할 수 있는 sagittal영상에서 spine body의 중심에 포인트 label을 하였다. 3단계 데이터는 trunk영상과 trunk가 아닌 데이터(=outside the human body trunk)를 mask데이터로 사용하였다. 4단계 데이터는 라벨링은 body composition labeling으로 background, muscle, subcutaneous tissue, abdominal cavity 4 개의 다른 label로 annotation하였다. annotation을 위해서 3d slicer software (version 5.1) was used. Region segmentation was perfomed manually. Final dataset은 단계에서 장의 sagittal image가 이용되었다.
 
- 2단계 데이터는 trunk영상과 아닌 데이터를 mask데이터로 사용하였다. 3단계 데이터는 라벨링은 body composition labeling으로 background, muscle, subcutaneous tissue, abdominal cavity 4 개의 다른 label로 annotation하였다. annotation을 위해서 3d slicer software (version 5.1) was used. Region segmentation was perfomed manually. Final dataset은 단계에서 장의 sagittal image가 이용되었으며, 
+Network architectures
+
+For this study, U-Net network architecture was chosen for training.[U-Net: Convolutional Networks for Biomedical Image Segmentation, Olaf Ronneberger, Philipp Fischer, and Thomas Brox, 
+
+Training details
+
+The implementation of network architectures and training was done in Python using Tensorflow 2.0 and the Keras API. Google colaboratory Nvidia GPUs with 32 GB VRAM were used.
+Adam with decoupled weight decay regularization was utilized, configured with beta_1 = 0.9, beta_2 = 0.999, eps = 1e-7, and weight decay of 1e-4. An exponentially decaying learning rate with an initial value of 1e-4, mutiplied by 0.95 every 50 epochs, helped to stabilize the optimization process at the end of the training. For selecting the best model weights during training, fivefold cross-validation was used on the training et and the average dice score was monitored on the respective validation splits. Since the training dataset consists of 40 abdominal CTs, each training run was performed using 32 CTs for training and 8 CTs for validation
