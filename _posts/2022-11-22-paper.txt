@@ -3,9 +3,26 @@ TCIA의 각 환자들의 torso CT데이터 여부를 확인하여, CT데이터�
 
 Network architectures
 
-For this study, U-Net network architecture was chosen for training.[U-Net: Convolutional Networks for Biomedical Image Segmentation, Olaf Ronneberger, Philipp Fischer, and Thomas Brox, 
+각 단계별의 network architecture는 시간을 절약하기 위하여 모두 통일된 방법을 사용하였다. For this study, U-Net network architecture was chosen for training.[U-Net: Convolutional Networks for Biomedical Image Segmentation, Olaf Ronneberger, Philipp Fischer, and Thomas Brox, 
 
 Training details
 
 The implementation of network architectures and training was done in Python using Tensorflow 2.0 and the Keras API. Google colaboratory Nvidia GPUs with 32 GB VRAM were used.
 Adam with decoupled weight decay regularization was utilized, configured with beta_1 = 0.9, beta_2 = 0.999, eps = 1e-7, and weight decay of 1e-4. An exponentially decaying learning rate with an initial value of 1e-4, mutiplied by 0.95 every 50 epochs, helped to stabilize the optimization process at the end of the training. For selecting the best model weights during training, fivefold cross-validation was used on the training et and the average dice score was monitored on the respective validation splits. Since the training dataset consists of 40 abdominal CTs, each training run was performed using 32 CTs for training and 8 CTs for validation
+
+During training, several data augmentations were applied in order to virtually increase the unique sample size for training a generalizable network. For example, in [11, 12, 19], it has been shown that aggressive data augmentation strategies can prevent overfitting on small sample sizes by capturing expectable variations in the data. First, random scale augmentation was applied with a scaling factor sampled uniformly between 0.8 and 1.2. Since this factor was sampled independently for both x- and y-axis, it also acts as an aspect ratio augmentation. Second, ~~~~
+
+FOr supervision, a combination of softmax cross-entropy loss and generalized Sorensen Dice loss was chosen, similar to [19]. Voxels marked with an ignore label do not contribute to the loss compuatation. Both losses are defined as below:
+
+LXCE = -(1/N)*(N sigma n=1, C sigma c=1, y(c,n) * log(y(c,n))
+LDice = 1.0 - (1/(C-1))*(sigma c=2(~~~~)
+
+C stands for the total number of classes, which equals six for the problem at hand. Hand y(c,n) and y(c,n) represent the prediction respectively groundtruth label for class c at voxel location n. The background class is in this work explicitly not covered by the dice loss in order to give the foreground classes more weight in the optimization process. This choice is well known for class imbalanced problems where the foreground class only covers little areas compared with the background class.
+ The final loss is an equally weighted combination of both losses:
+LSV = 0.5* LXCE + 0.5*LDice
+
+Tissue quantification
+
+Step 1 spine(bone) segmentation
+
+Variable materias can be extracted from a CT by thresholding the HU to a specific intensity ragne. For quantifying tissues, the reporting system uses a mixture of classical thresholding and modern semantic segmentation neural networks for building semantic relationships. During training, fivefold cross-validation [21] was employed to measure the generalization performance of the selected model configuration, which in the end produced five 
